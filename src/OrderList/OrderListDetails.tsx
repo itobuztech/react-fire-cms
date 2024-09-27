@@ -14,7 +14,7 @@ export default function OrderListDetails() {
   return (
     <>
       <ShoppingCartHeader />
-      <body>
+      <div>
         <div className='container mx-auto mt-10'>
           {/* order details */}
           <div className='w-full bg-gray-50 px-8 py-8 mb-4'>
@@ -74,33 +74,29 @@ export default function OrderListDetails() {
                 <span className='font-medium text-base'>Rimpa Das</span>
               </div>
 
-             
-                <div className='mt-2'>
-                  <span className='font-normal text-base'>
-                    Webel STP II Building, 53, DN Block, Sector V, Bidhannagar, Kolkata
-                  </span>
-                </div>
-          
-                <div>
-                  <span className='font-normal text-base'>
-                  West Bengal 700091
-                  </span>
-                </div>
+              <div className='mt-2'>
+                <span className='font-normal text-base'>
+                  Webel STP II Building, 53, DN Block, Sector V, Bidhannagar, Kolkata
+                </span>
+              </div>
 
-                <div className='mt-2'>
-                  <span className='font-normal text-base'>
-                <label className='font-semibold mr-2'>Phone number:</label>
-                5432543234
-                  </span>
-                </div>
+              <div>
+                <span className='font-normal text-base'>West Bengal 700091</span>
+              </div>
 
+              <div className='mt-2'>
+                <span className='font-normal text-base'>
+                  <label className='font-semibold mr-2'>Phone number:</label>
+                  5432543234
+                </span>
+              </div>
 
-                <div className='mt-2'>
-                  <span className='font-normal text-base'>
-                <label className='font-semibold mr-2'>Payment method:</label>
-                Net Banking
-                  </span>
-                </div>
+              <div className='mt-2'>
+                <span className='font-normal text-base'>
+                  <label className='font-semibold mr-2'>Payment method:</label>
+                  Net Banking
+                </span>
+              </div>
             </div>
 
             {/*Order summary section */}
@@ -140,7 +136,7 @@ export default function OrderListDetails() {
             </div>
           </div>
         </div>
-      </body>
+      </div>
     </>
   );
 }

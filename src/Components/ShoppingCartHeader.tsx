@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BsBoxArrowRight, BsCart3 } from 'react-icons/bs';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { MdOutlineCategory, MdOutlineKeyboardArrowDown } from 'react-icons/md';
@@ -9,10 +9,31 @@ import { routes } from 'routes';
 import { SearchField } from './SearchField';
 import '../Styles/product-list-header.css';
 import { BiLogOutCircle } from 'react-icons/bi';
+import { getDocs, collection } from 'firebase/firestore';
+import { CartItem } from 'Interface/CartItem.interface';
+import { db } from 'lib/firebase';
 
 export default function ShoppingCartHeader() {
   const productCart = '/product-cart';
   const [cartHide] = useState(useLocation().pathname === productCart ? true : false);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
+  // get product list
+  const fetchCart = async () => {
+    const getData = await getDocs(collection(db, 'cartItem'));
+    const data = getData.docs.map((items) => items.data() as CartItem);
+    setCartItems(data);
+  };
+  useEffect(() => {
+    fetchCart();
+  }, []);
+
+  const initialValue = 0;
+  const cartItemsCount = cartItems.reduce(
+    (accumulator: number, current: { Quantity: number }) => accumulator + current.Quantity,
+    initialValue
+  );
+
   return (
     <>
       <div className='bg-indigo-400'>
@@ -193,11 +214,14 @@ export default function ShoppingCartHeader() {
               </ul>
             </div>
             {!cartHide ? (
-              <div className='md:text-3xl sm:text-2xl text-white lg:pr-6 md:pr-2'>
-                <Link to={routes.productCart}>
-                  {' '}
-                  <BsCart3 />
-                </Link>
+              <div className='flex'>
+                <div className='md:text-3xl sm:text-2xl text-white'>
+                  <Link to={routes.productCart}>
+                    {' '}
+                    <BsCart3 />
+                  </Link>
+                </div>
+                (<div className='text-red-600'>{cartItemsCount}</div>)
               </div>
             ) : null}
           </div>

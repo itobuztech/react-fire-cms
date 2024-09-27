@@ -4,13 +4,17 @@ import React from 'react';
 import { FaUserAlt } from 'react-icons/fa';
 import { AiFillLock } from 'react-icons/ai';
 import ShoppingCartHeader from 'Components/ShoppingCartHeader';
+import { useSelector } from 'react-redux';
+import { RootState } from 'Store/store';
 
 export default function UserProfile() {
+  //current user
+  const currentUser = useSelector((state: RootState) => state.auth.user);
   return (
     <>
       {' '}
       <ShoppingCartHeader />
-      <body className='bg-gray-100 p-10'>
+      <div className='bg-gray-100 p-10'>
         <div className='grid grid-cols-1 gap-6 lg:grid-cols-2 mb-6'>
           <div className='bg-white'>
             <header className='p-6 flex items-stretch border-b border-gray-100'>
@@ -35,7 +39,8 @@ export default function UserProfile() {
                 <div className='field'>
                   <label className='pr-4 font-semibold'>Name</label>
                   <div className='pb-2 pt-2'>
-                    <TextInputField value='Rimpa Das' placeholder='Enter your name' type='text' />
+                    <TextInputField placeholder='Enter your name' type='text' 
+                    value={(String(currentUser?.displayName))} />
                   </div>
                 </div>
                 <div className='field'>
@@ -64,7 +69,7 @@ export default function UserProfile() {
             <div className='card-content p-6'>
               <div className=' block relative w-48 h-48 mx-auto'>
                 <img
-                  src='https://avatars.dicebear.com/v2/initials/john-doe.svg'
+                  src={(String(currentUser?.photoURL))}
                   alt='image'
                   className='rounded-full p-2'
                 />
@@ -72,12 +77,12 @@ export default function UserProfile() {
               <hr />
               <div className='field p-2'>
                 <label className='font-semibold'>Name</label>
-                <div>Rimpa Das</div>
+                <div>{currentUser?.displayName}</div>
               </div>
               <hr />
               <div className='field p-2'>
                 <label className='font-semibold'>Email</label>
-                <div>rimpa@itobuz.com</div>
+                <div>{currentUser?.email}</div>
               </div>
             </div>
           </div>
@@ -118,7 +123,7 @@ export default function UserProfile() {
             </form>
           </div>
         </div>
-      </body>
+      </div>
     </>
   );
 }
